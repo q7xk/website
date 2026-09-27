@@ -1,0 +1,141 @@
+:root {
+    --bg-color: #141414;
+    --ink-1: #3f3f46;
+    --ink-2: #a1a1aa;
+    --text-white: #f4f4f5;
+    --text-gray: #a8adb8;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; background: var(--bg-color); }
+body {
+    overflow: hidden;
+    font-family: 'VT323', ui-monospace, monospace;
+}
+canvas { display: block; position: fixed; inset: 0; }
+
+.veil {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 840px 540px at 50% 50%,
+        rgba(16, 16, 17, 0.96) 0%,
+        rgba(16, 16, 17, 0.88) 35%,
+        rgba(16, 16, 17, 0.55) 62%,
+        rgba(16, 16, 17, 0) 85%);
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: none;
+    padding: env(safe-area-inset-top, 0) 1.5rem env(safe-area-inset-bottom, 0);
+}
+
+.name {
+    position: relative;
+    display: inline-block;
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(2.2rem, 9vw, 4.3rem);
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+    color: var(--text-white);
+    text-shadow: 0 0 22px rgba(244, 244, 245, 0.25);
+    animation: flicker 7s infinite;
+}
+.name::before, .name::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    color: var(--text-white);
+    overflow: hidden;
+    opacity: 0;
+}
+.name::before { animation: glitchA 7s infinite; }
+.name::after { animation: glitchB 7s infinite; animation-delay: 0.15s; }
+
+@keyframes flicker {
+    0%, 91%, 100% { opacity: 1; }
+    92% { opacity: 0.75; }
+    93% { opacity: 1; }
+    94% { opacity: 0.85; }
+    95% { opacity: 1; }
+}
+@keyframes glitchA {
+    0%, 90%, 100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+    91% { opacity: 0.85; transform: translate(3px, 0); clip-path: inset(10% 0 65% 0); }
+    92.5% { opacity: 0.85; transform: translate(-2px, 0); clip-path: inset(55% 0 15% 0); }
+    94% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+}
+@keyframes glitchB {
+    0%, 90%, 100% { opacity: 0; transform: translate(0, 0); clip-path: inset(100% 0 0 0); }
+    91% { opacity: 0.85; transform: translate(-3px, 0); clip-path: inset(70% 0 5% 0); }
+    92.5% { opacity: 0.85; transform: translate(2px, 0); clip-path: inset(20% 0 50% 0); }
+    94% { opacity: 0; transform: translate(0, 0); clip-path: inset(100% 0 0 0); }
+}
+
+.tagline {
+    margin-top: 1.2rem;
+    font-family: 'VT323', monospace;
+    font-size: clamp(1rem, 2.1vw, 1.35rem);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    color: var(--text-gray);
+    max-width: min(90vw, 34rem);
+}
+
+.links {
+    pointer-events: auto;
+    margin-top: 1.4rem;
+    font-family: 'VT323', monospace;
+    font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+    letter-spacing: 0.02em;
+}
+.links .link {
+    color: var(--text-white);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+}
+.links .link:hover, .links .link:focus-visible {
+    border-color: var(--text-white);
+}
+.links .sep { color: var(--text-gray); opacity: 0.55; margin: 0 0.45em; }
+.links .muted { color: var(--text-gray); opacity: 0.55; }
+
+.tooltip-trigger {
+    position: relative;
+    pointer-events: auto;
+    cursor: help;
+    border-bottom: 1px dotted var(--text-gray);
+}
+.tooltip-trigger .tooltip {
+    position: absolute;
+    bottom: 135%;
+    left: 50%;
+    width: max-content;
+    max-width: 210px;
+    transform: translate(-50%, 4px) scale(0.85);
+    background: #1c1c1e;
+    border: 2px solid var(--text-gray);
+    clip-path: polygon(0 8px, 8px 8px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 8px,
+        100% 8px, 100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+        calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px));
+    color: var(--text-white);
+    font-size: 0.95rem;
+    line-height: 1.35;
+    text-align: center;
+    padding: 0.6rem 0.7rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s steps(3), transform 0.15s steps(3);
+}
+.tooltip-trigger:hover .tooltip,
+.tooltip-trigger:focus-visible .tooltip {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+}

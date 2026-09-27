@@ -1,0 +1,101 @@
+---
+import "./style.css";
+
+const title = "q7xk";
+---
+
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <div class="veil"></div>
+
+    <div class="overlay">
+      <h1 class="name" data-text={title}>{title}</h1>
+      <p class="tagline">
+        somewhere between code and chaos,<br />
+        I build <span class="tooltip-trigger">open-source<span class="tooltip">Given enough eyeballs, all bugs are shallow.</span></span> things, explore new ideas,<br />
+        and believe privacy should be the default.
+      </p>
+      <p class="links">
+        <a href="https://github.com/q7xk" class="link" target="_blank" rel="noopener noreferrer">GitHub</a><span class="sep">·</span><a href="mailto:q7xk@proton.me" class="link">Email</a>
+      </p>
+    </div>
+
+    <script>
+      import { hexToRgb } from "./wave.ts";
+
+      const cv = document.getElementById("c") as HTMLCanvasElement;
+      const ctx = cv.getContext("2d") as CanvasRenderingContext2D;
+      const css = getComputedStyle(document.documentElement);
+
+      const bg = (css.getPropertyValue("--bg-color") || "#141414").trim();
+      const i1 = hexToRgb(css.getPropertyValue("--ink-1") || "#3f3f46");
+      const i2 = hexToRgb(css.getPropertyValue("--ink-2") || "#a1a1aa");
+
+      const CELL = 15;
+      const RAMP = " .:-=+*#%@";
+      let w: number, h: number, cols: number, rows: number;
+      const mouse = { x: -9999, y: -9999 };
+
+      function build() {
+        w = cv.width = innerWidth;
+        h = cv.height = innerHeight;
+        cols = Math.ceil(w / CELL);
+        rows = Math.ceil(h / CELL);
+        ctx.font = `${CELL}px "JetBrains Mono", ui-monospace, monospace`;
+        ctx.textBaseline = "top";
+      }
+      addEventListener("resize", build);
+      addEventListener("mousemove", (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+      addEventListener("mouseleave", () => { mouse.x = mouse.y = -9999; });
+      build();
+
+      function step(t: number) {
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, w, h);
+        for (let j = 0; j < rows; j++) {
+          for (let i = 0; i < cols; i++) {
+            const px = i * CELL, py = j * CELL;
+            let v = Math.sin(i * 0.28 + t) * 0.5
+                  + Math.sin(j * 0.34 - t * 0.8) * 0.5
+                  + Math.sin((i + j) * 0.18 + t * 0.6) * 0.6
+                  + Math.sin(Math.hypot(i - cols / 2, j - rows / 2) * 0.35 - t * 1.4) * 0.7;
+            const dx = px - mouse.x, dy = py - mouse.y, d = Math.hypot(dx, dy);
+            if (d < 220) v += (1 - d / 220) * 1.6;
+            let n = (v / 2.8) * 0.5 + 0.5;
+            n = Math.max(0, Math.min(0.999, n));
+            const ch = RAMP[(n * RAMP.length) | 0];
+            if (ch === " ") continue;
+            const r = i1[0] + (i2[0] - i1[0]) * n | 0;
+            const g = i1[1] + (i2[1] - i1[1]) * n | 0;
+            const b = i1[2] + (i2[2] - i1[2]) * n | 0;
+            ctx.fillStyle = `rgba(${r},${g},${b},${0.25 + n * 0.75})`;
+            ctx.fillText(ch, px, py);
+          }
+        }
+      }
+
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        step(1.0);
+      } else {
+        let t = 0;
+        (function loop() {
+          t += 0.035;
+          step(t);
+          requestAnimationFrame(loop);
+        })();
+      }
+    </script>
+  </body>
+</html>
