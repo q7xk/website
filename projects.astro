@@ -1,67 +1,14 @@
 ---
 import "./style.css";
-import "./projects.css";
 
-interface Fact {
-  lead?: { label: string; href: string };
-  text: string;
-}
-
-interface Project {
-  name: string;
-  description: string;
-  facts: Fact[];
-  tags: string[];
-  links: { label: string; href: string }[];
-}
-
-const projects: Project[] = [
-  {
-    name: "Q7 Chat",
-    description:
-      "A private messenger that runs entirely in the browser. No accounts, no server, and every message disappears after 72 hours.",
-    facts: [
-      { text: "End-to-end encrypted, peer-to-peer over WebRTC" },
-      { text: "Encrypted relay fallback through public MQTT brokers" },
-      { text: "Chats and keys stay on your device in IndexedDB" },
-    ],
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "WebRTC"],
-    links: [
-      { label: "GitHub", href: "https://github.com/q7xk/q7-chat" },
-      { label: "Live", href: "https://ms-q7xk.vercel.app" },
-    ],
-  },
-  {
-    name: "Nexus Linux",
-    description:
-      "An independent open-source Linux distribution aiming for a modern, reliable and user-friendly desktop.",
-    facts: [
-      {
-        lead: { label: "nexsolv", href: "https://github.com/Nexus-Linux-Official/nexsolv" },
-        text: ", a dependency solver in C",
-      },
-      {
-        lead: { label: "nexus-rust-tools", href: "https://github.com/Nexus-Linux-Official/nexus-rust-tools" },
-        text: ", written in Rust",
-      },
-      {
-        lead: { label: "nexus-iso", href: "https://github.com/Nexus-Linux-Official/nexus-iso" },
-        text: ", written in Shell",
-      },
-    ],
-    tags: ["Linux", "C", "Rust", "Shell"],
-    links: [{ label: "GitHub", href: "https://github.com/Nexus-Linux-Official" }],
-  },
-];
-
-const title = "My Projects";
+const title = "q7xk";
 ---
 
 <html lang="tr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>{title} · q7xk</title>
+    <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -70,42 +17,86 @@ const title = "My Projects";
     />
     <link rel="icon" href="https://avatars.githubusercontent.com/u/292994106?v=4" />
   </head>
-  <body class="projects">
+  <body>
     <canvas id="c"></canvas>
     <div class="veil"></div>
 
-    <main class="page">
-      <a class="back" href="/">Home</a>
-      <h1 class="page-title">{title}</h1>
+    <div class="overlay">
+      <h1 class="name" data-text={title}>{title}</h1>
+      <p class="tagline">
+        somewhere between code and chaos,<br />
+        I build <span class="tooltip-trigger">open-source<span class="tooltip">Given enough eyeballs, all bugs are shallow.</span></span> things, explore new ideas,<br />
+        and believe privacy should be the default.
+      </p>
+      <p class="links">
+        <a href="https://github.com/q7xk" class="link" target="_blank" rel="noopener noreferrer">GitHub</a><span class="sep">·</span><a href="mailto:q7xk@proton.me" class="link">Email</a><span class="sep">·</span><a href="https://q7xk.vercel.app/projects.html" class="link">Projects</a>
+      </p>
+    </div>
 
-      <div class="grid">
-        {projects.map((p) => (
-          <article class="card">
-            <h2>{p.name}</h2>
-            <p class="desc">{p.description}</p>
-            <ul class="facts">
-              {p.facts.map((f) => (
-                <li>
-                  {f.lead && (
-                    <a href={f.lead.href} target="_blank" rel="noopener noreferrer">{f.lead.label}</a>
-                  )}
-                  {f.text}
-                </li>
-              ))}
-            </ul>
-            <ul class="tags">
-              {p.tags.map((t) => <li>{t}</li>)}
-            </ul>
-            <div class="card-links">
-              {p.links.map((l) => (
-                <a href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
-    </main>
+    <script>
+      import { hexToRgb } from "./wave.ts";
 
-    <script src="./script.js"></script>
+      const cv = document.getElementById("c") as HTMLCanvasElement;
+      const ctx = cv.getContext("2d") as CanvasRenderingContext2D;
+      const css = getComputedStyle(document.documentElement);
+
+      const bg = (css.getPropertyValue("--bg-color") || "#141414").trim();
+      const i1 = hexToRgb(css.getPropertyValue("--ink-1") || "#3f3f46");
+      const i2 = hexToRgb(css.getPropertyValue("--ink-2") || "#a1a1aa");
+
+      const CELL = 15;
+      const RAMP = " .:-=+*#%@";
+      let w: number, h: number, cols: number, rows: number;
+      const mouse = { x: -9999, y: -9999 };
+
+      function build() {
+        w = cv.width = innerWidth;
+        h = cv.height = innerHeight;
+        cols = Math.ceil(w / CELL);
+        rows = Math.ceil(h / CELL);
+        ctx.font = `${CELL}px "JetBrains Mono", ui-monospace, monospace`;
+        ctx.textBaseline = "top";
+      }
+      addEventListener("resize", build);
+      addEventListener("mousemove", (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+      addEventListener("mouseleave", () => { mouse.x = mouse.y = -9999; });
+      build();
+
+      function step(t: number) {
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, w, h);
+        for (let j = 0; j < rows; j++) {
+          for (let i = 0; i < cols; i++) {
+            const px = i * CELL, py = j * CELL;
+            let v = Math.sin(i * 0.28 + t) * 0.5
+                  + Math.sin(j * 0.34 - t * 0.8) * 0.5
+                  + Math.sin((i + j) * 0.18 + t * 0.6) * 0.6
+                  + Math.sin(Math.hypot(i - cols / 2, j - rows / 2) * 0.35 - t * 1.4) * 0.7;
+            const dx = px - mouse.x, dy = py - mouse.y, d = Math.hypot(dx, dy);
+            if (d < 220) v += (1 - d / 220) * 1.6;
+            let n = (v / 2.8) * 0.5 + 0.5;
+            n = Math.max(0, Math.min(0.999, n));
+            const ch = RAMP[(n * RAMP.length) | 0];
+            if (ch === " ") continue;
+            const r = i1[0] + (i2[0] - i1[0]) * n | 0;
+            const g = i1[1] + (i2[1] - i1[1]) * n | 0;
+            const b = i1[2] + (i2[2] - i1[2]) * n | 0;
+            ctx.fillStyle = `rgba(${r},${g},${b},${0.25 + n * 0.75})`;
+            ctx.fillText(ch, px, py);
+          }
+        }
+      }
+
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        step(1.0);
+      } else {
+        let t = 0;
+        (function loop() {
+          t += 0.035;
+          step(t);
+          requestAnimationFrame(loop);
+        })();
+      }
+    </script>
   </body>
 </html>
