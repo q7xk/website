@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Projects · q7xk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="projects.css">
+<link rel="icon" href="https://avatars.githubusercontent.com/u/292994106?v=4">
+</head>
+<body class="projects">
+    <canvas id="c"></canvas>
+    <div class="veil"></div>
+
+    <main class="page">
+        <a class="back" href="index.html">Home</a>
+        <h1 class="page-title">My Projects</h1>
+
+        <div class="grid">
+            <article class="card">
+                <h2>Q7 Chat</h2>
+                <p class="desc">A private messenger that runs entirely in the browser. No accounts, no server, and every message disappears after 72 hours.</p>
+                <ul class="facts">
+                    <li>End-to-end encrypted, peer-to-peer over WebRTC</li>
+                    <li>Encrypted relay fallback through public MQTT brokers</li>
+                    <li>Chats and keys stay on your device in IndexedDB</li>
+                </ul>
+                <ul class="tags">
+                    <li>Next.js</li>
+                    <li>TypeScript</li>
+                    <li>Tailwind CSS</li>
+                    <li>WebRTC</li>
+                </ul>
+                <div class="card-links">
+                    <a href="https://github.com/q7xk/q7-chat" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://ms-q7xk.vercel.app" target="_blank" rel="noopener noreferrer">Live</a>
+                </div>
+            </article>
+
+            <article class="card">
+                <h2>Nexus Linux</h2>
+                <p class="desc">An independent open-source Linux distribution aiming for a modern, reliable and user-friendly desktop.</p>
+                <ul class="facts">
+                    <li><a href="https://github.com/Nexus-Linux-Official/nexsolv" target="_blank" rel="noopener noreferrer">nexsolv</a>, a dependency solver in C</li>
+                    <li><a href="https://github.com/Nexus-Linux-Official/nexus-rust-tools" target="_blank" rel="noopener noreferrer">nexus-rust-tools</a>, written in Rust</li>
+                    <li><a href="https://github.com/Nexus-Linux-Official/nexus-iso" target="_blank" rel="noopener noreferrer">nexus-iso</a>, written in Shell</li>
+                </ul>
+                <ul class="tags">
+                    <li>Linux</li>
+                    <li>C</li>
+                    <li>Rust</li>
+                    <li>Shell</li>
+                </ul>
+                <div class="card-links">
+                    <a href="https://github.com/Nexus-Linux-Official" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
