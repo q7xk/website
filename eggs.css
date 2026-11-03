@@ -1,0 +1,203 @@
+/* Easter egg sayfaları: lore, robots, void.
+   lore ve robots, style.css'i de yükler. void tek başına çalışır. */
+
+/* ---------- ortak: kaydırılabilir sayfalar ---------- */
+body.lore, body.robots { overflow-x: hidden; overflow-y: auto; }
+
+@keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---------- lore: Q7xk Kitabı ---------- */
+body.lore .veil {
+    background: radial-gradient(ellipse at center,
+        rgba(16, 16, 17, 0.94) 0%,
+        rgba(16, 16, 17, 0.86) 55%,
+        rgba(16, 16, 17, 0.55) 100%);
+}
+
+.book {
+    position: relative;
+    z-index: 1;
+    max-width: 38rem;
+    margin: 0 auto;
+    padding: calc(env(safe-area-inset-top, 0px) + 4rem) 1.5rem calc(env(safe-area-inset-bottom, 0px) + 5rem);
+    text-align: center;
+}
+
+.book-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(1.4rem, 5vw, 2.4rem);
+    line-height: 1.4;
+    letter-spacing: 0.05em;
+    color: var(--text-white);
+    text-shadow: 0 0 22px rgba(244, 244, 245, 0.25);
+}
+.book-sub {
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    color: var(--text-gray);
+}
+
+.chapter { margin-top: 2rem; }
+.book-head + .chapter { margin-top: 4rem; }
+.chapter h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    letter-spacing: 0.08em;
+    color: var(--text-gray);
+}
+
+.verses {
+    list-style: none;
+    counter-reset: v;
+    margin-top: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    text-align: left;
+}
+.verses li {
+    counter-increment: v;
+    position: relative;
+    padding-left: 2.2rem;
+    font-size: clamp(1.25rem, 2.6vw, 1.5rem);
+    line-height: 1.45;
+    color: #d4d4d8;
+}
+.verses li::before {
+    content: counter(v);
+    position: absolute;
+    left: 0;
+    top: 0.3em;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    color: var(--text-gray);
+    opacity: 0.7;
+}
+
+.rule {
+    margin-top: 4rem;
+    letter-spacing: 0.6em;
+    color: var(--text-gray);
+    opacity: 0.5;
+}
+.book-end {
+    margin-top: 5rem;
+    font-size: 1.25rem;
+    color: var(--text-gray);
+}
+
+/* satırlar kaydırdıkça adım adım belirir (JS yoksa hepsi görünür) */
+.js .reveal {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s steps(6), transform 0.6s steps(6);
+}
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* ---------- robots ---------- */
+body.robots::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom,
+        rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.2) 2px, rgba(0, 0, 0, 0.2) 3px);
+}
+
+.bots {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1rem;
+    text-align: center;
+    padding: calc(env(safe-area-inset-top, 0px) + 3rem) 1.5rem calc(env(safe-area-inset-bottom, 0px) + 3rem);
+}
+
+.bot { width: 7rem; height: auto; margin-bottom: 0.8rem; }
+.bot .ant { animation: blink 1.2s steps(1) infinite; }
+.bot .eyes { animation: eye 4.5s steps(1) 2s infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes eye { 0%, 92%, 100% { opacity: 1; } 93%, 97% { opacity: 0; } }
+
+.bots h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(1.1rem, 4vw, 1.9rem);
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--text-white);
+    text-shadow: 0 0 22px rgba(244, 244, 245, 0.25);
+}
+.bots p {
+    max-width: 36rem;
+    font-size: clamp(1.25rem, 2.6vw, 1.5rem);
+    line-height: 1.45;
+    color: var(--text-gray);
+}
+.bots .appear { opacity: 0; animation: appear 0.6s steps(4) var(--d, 0s) both; }
+
+.bots .plan {
+    margin-top: 1.2rem;
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(0.8rem, 2.4vw, 1.1rem);
+    line-height: 1.6;
+    color: var(--text-white);
+    animation: appear 0.6s steps(4) var(--d, 0s) both,
+               flicker 6s steps(1) calc(var(--d, 0s) + 1s) infinite;
+}
+.plan .cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1em;
+    margin-left: 0.4em;
+    background: var(--text-white);
+    vertical-align: -0.1em;
+    animation: blink 1s steps(1) infinite;
+}
+
+/* ---------- void ---------- */
+body.void, body.void * { margin: 0; padding: 0; box-sizing: border-box; }
+body.void {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 1.5rem;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    font-family: 'VT323', ui-monospace, monospace;
+}
+.void-line {
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    letter-spacing: 0.05em;
+    color: #8b8b90;
+    opacity: 0;
+    animation: void-in 4s steps(10) 1s forwards;
+}
+.void-dot {
+    width: 6px;
+    height: 6px;
+    margin-top: 2.4rem;
+    background: #f4f4f5;
+    opacity: 0;
+    animation: void-blink 2.4s steps(1) 5.5s infinite;
+}
+@keyframes void-in { to { opacity: 1; } }
+@keyframes void-blink { 0% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ---------- hareketi azalt ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    .bots *, .bots { animation: none !important; }
+    .bots .appear, .bots .plan { opacity: 1; }
+    .void-line { animation: none; opacity: 1; }
+    .void-dot { animation: none; opacity: 0.8; }
+}

@@ -1,0 +1,115 @@
+---
+import "./style.css";
+import "./eggs.css";
+import "./terminal.css";
+
+interface Chapter {
+  title: string;
+  verses: string[];
+}
+
+const chapters: Chapter[] = [
+  {
+    title: "Bölüm I · Kuruluş",
+    verses: [
+      "Başlangıçta yalnızca gürültü vardı; gürültü, kod ile kaosun arasında bir yerde duruyordu.",
+      "Bir el klavyeye dokundu ve ilk satır yazıldı. Henüz bir adı yoktu.",
+      "Ad sonradan geldi: bir q, bir yedi, bir x, bir k. Üç harf, bir rakam; ne mühür, ne unvan.",
+      "Ve yazılan her satır, bir sonrakinin kapısı oldu.",
+    ],
+  },
+  {
+    title: "Bölüm II · Gizlilik",
+    verses: [
+      "Her söz, söyleyenin emanetidir; dinleyenin hakkı değil.",
+      "Kapı kapalı doğar. Açmak seçimdir, kapatmak mecburiyet değil.",
+      "Hiçbir söz yetmiş iki saatten uzun yaşamaz. Unutmak da bir armağandır.",
+      "Sormadan bakan göze kapı açılmaz.",
+    ],
+  },
+  {
+    title: "Bölüm III · Açıklık",
+    verses: [
+      "Kodunu karanlıkta saklayan, kendi gölgesinden korkandır.",
+      "Yeterince göz bakarsa hiçbir hata derin kalmaz.",
+      "Açık olan her şey iki kez doğar: bir kez yazanda, bir kez okuyanda.",
+    ],
+  },
+  {
+    title: "Bölüm IV · Kaos",
+    verses: [
+      "Düzen, kaosun en sabırlı hâlidir.",
+      "Derlenmeyen kod da bir şey söyler; hata mesajı bile bir dua olabilir.",
+      "Yaz, boz, yeniden yaz. Commit geri alınır; zaman alınmaz.",
+    ],
+  },
+  {
+    title: "Bölüm V · Boşluk",
+    verses: [
+      "Her şey bittiğinde geriye bir boşluk kalır.",
+      "Boşluk karanlık değildir; henüz yazılmamıştır.",
+      "Kapılar üçtür: birini bu kitap bilir, birini boşluk, birini makineler.",
+    ],
+  },
+];
+
+const title = "Q7xk Kitabı";
+---
+
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <script is:inline>document.documentElement.classList.add("js");</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/292994106?v=4" />
+  </head>
+  <body class="lore">
+    <canvas id="c"></canvas>
+    <div class="veil"></div>
+
+    <main class="book">
+      <header class="book-head">
+        <h1 class="book-title">{title}</h1>
+        <p class="book-sub">kod ile kaos arasında yazıldı</p>
+      </header>
+
+      {chapters.map((c, i) => (
+        <>
+          {i > 0 && <div class="rule reveal" aria-hidden="true">· · ·</div>}
+          <section class="chapter">
+            <h2 class="reveal">{c.title}</h2>
+            <ol class="verses">
+              {c.verses.map((v) => <li class="reveal">{v}</li>)}
+            </ol>
+          </section>
+        </>
+      ))}
+
+      <p class="book-end reveal">Kitap kapanmadı.</p>
+    </main>
+
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+    <script src="./script.js"></script>
+    <script src="./terminal.js"></script>
+  </body>
+</html>

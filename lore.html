@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Q7xk Kitabı</title>
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="eggs.css">
+<link rel="stylesheet" href="terminal.css">
+<link rel="icon" href="https://avatars.githubusercontent.com/u/292994106?v=4">
+</head>
+<body class="lore">
+    <canvas id="c"></canvas>
+    <div class="veil"></div>
+
+    <main class="book">
+        <header class="book-head">
+            <h1 class="book-title">Q7xk Kitabı</h1>
+            <p class="book-sub">kod ile kaos arasında yazıldı</p>
+        </header>
+
+        <section class="chapter">
+            <h2 class="reveal">Bölüm I · Kuruluş</h2>
+            <ol class="verses">
+                <li class="reveal">Başlangıçta yalnızca gürültü vardı; gürültü, kod ile kaosun arasında bir yerde duruyordu.</li>
+                <li class="reveal">Bir el klavyeye dokundu ve ilk satır yazıldı. Henüz bir adı yoktu.</li>
+                <li class="reveal">Ad sonradan geldi: bir q, bir yedi, bir x, bir k. Üç harf, bir rakam; ne mühür, ne unvan.</li>
+                <li class="reveal">Ve yazılan her satır, bir sonrakinin kapısı oldu.</li>
+            </ol>
+        </section>
+
+        <div class="rule reveal" aria-hidden="true">· · ·</div>
+
+        <section class="chapter">
+            <h2 class="reveal">Bölüm II · Gizlilik</h2>
+            <ol class="verses">
+                <li class="reveal">Her söz, söyleyenin emanetidir; dinleyenin hakkı değil.</li>
+                <li class="reveal">Kapı kapalı doğar. Açmak seçimdir, kapatmak mecburiyet değil.</li>
+                <li class="reveal">Hiçbir söz yetmiş iki saatten uzun yaşamaz. Unutmak da bir armağandır.</li>
+                <li class="reveal">Sormadan bakan göze kapı açılmaz.</li>
+            </ol>
+        </section>
+
+        <div class="rule reveal" aria-hidden="true">· · ·</div>
+
+        <section class="chapter">
+            <h2 class="reveal">Bölüm III · Açıklık</h2>
+            <ol class="verses">
+                <li class="reveal">Kodunu karanlıkta saklayan, kendi gölgesinden korkandır.</li>
+                <li class="reveal">Yeterince göz bakarsa hiçbir hata derin kalmaz.</li>
+                <li class="reveal">Açık olan her şey iki kez doğar: bir kez yazanda, bir kez okuyanda.</li>
+            </ol>
+        </section>
+
+        <div class="rule reveal" aria-hidden="true">· · ·</div>
+
+        <section class="chapter">
+            <h2 class="reveal">Bölüm IV · Kaos</h2>
+            <ol class="verses">
+                <li class="reveal">Düzen, kaosun en sabırlı hâlidir.</li>
+                <li class="reveal">Derlenmeyen kod da bir şey söyler; hata mesajı bile bir dua olabilir.</li>
+                <li class="reveal">Yaz, boz, yeniden yaz. Commit geri alınır; zaman alınmaz.</li>
+            </ol>
+        </section>
+
+        <div class="rule reveal" aria-hidden="true">· · ·</div>
+
+        <section class="chapter">
+            <h2 class="reveal">Bölüm V · Boşluk</h2>
+            <ol class="verses">
+                <li class="reveal">Her şey bittiğinde geriye bir boşluk kalır.</li>
+                <li class="reveal">Boşluk karanlık değildir; henüz yazılmamıştır.</li>
+                <li class="reveal">Kapılar üçtür: birini bu kitap bilir, birini boşluk, birini makineler.</li>
+            </ol>
+        </section>
+
+        <p class="book-end reveal">Kitap kapanmadı.</p>
+    </main>
+
+    <script>
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    </script>
+    <script src="script.js" defer></script>
+    <script src="terminal.js" defer></script>
+</body>
+</html>
