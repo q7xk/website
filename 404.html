@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>404 · q7xk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<!-- 404 sayfası herhangi bir yolda sunulabilir, o yüzden dosya yolları "/" ile başlar -->
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/terminal.css">
+<link rel="icon" href="https://avatars.githubusercontent.com/u/292994106?v=4">
+</head>
+<body>
+    <canvas id="c"></canvas>
+    <div class="veil"></div>
+
+    <div class="overlay">
+        <h1 class="name" data-text="404">404</h1>
+        <p class="tagline">
+            <span id="what">this page</span> wandered off somewhere between code and chaos,<br>
+            or it never existed at all.
+        </p>
+        <p class="links">
+            <a href="/" class="link">Back home</a>
+        </p>
+    </div>
+
+    <script>
+        const p = location.pathname;
+        if (p && p !== '/') {
+            document.getElementById('what').textContent = p.length > 40 ? p.slice(0, 40) + '...' : p;
+        }
+    </script>
+    <script src="/script.js" defer></script>
+    <script src="/terminal.js" defer></script>
+</body>
+</html>
