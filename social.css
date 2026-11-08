@@ -1,0 +1,65 @@
+/* Social Links sayfası. :root değişkenleri, canvas ve veil style.css'ten gelir. */
+
+body.social { overflow-x: hidden; overflow-y: auto; }
+
+body.social .veil {
+    background: radial-gradient(ellipse at center,
+        rgba(16, 16, 17, 0.92) 0%,
+        rgba(16, 16, 17, 0.8) 55%,
+        rgba(16, 16, 17, 0.4) 100%);
+}
+
+.social-page {
+    position: relative;
+    z-index: 1;
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: calc(env(safe-area-inset-top, 0px) + 2.5rem) 1.5rem calc(env(safe-area-inset-bottom, 0px) + 3rem);
+}
+
+.back {
+    font-family: 'VT323', monospace;
+    font-size: 1.3rem;
+    color: var(--text-gray);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+.back:hover, .back:focus-visible { color: var(--text-white); border-color: currentColor; }
+
+.social-title {
+    margin-top: 2rem;
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(1rem, 3.6vw, 1.6rem);
+    line-height: 1.6;
+    letter-spacing: 0.04em;
+    color: var(--text-white);
+    text-shadow: 0 0 22px rgba(244, 244, 245, 0.25);
+}
+
+.social-card {
+    margin-top: 2rem;
+    padding: 1.6rem 1.5rem;
+    background: #191919;
+    border: 2px solid #3a3a3d;
+    clip-path: polygon(0 8px, 8px 8px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 8px,
+        100% 8px, 100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+        calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px));
+}
+
+.socials {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.9rem 2rem;
+    font-size: clamp(1.25rem, 2.6vw, 1.5rem);
+    line-height: 1.3;
+}
+.socials dt { color: var(--text-gray); }
+.socials dd { color: var(--text-white); overflow-wrap: anywhere; }
+.socials a {
+    color: var(--text-white);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+}
+.socials a:hover, .socials a:focus-visible { border-color: var(--text-white); }

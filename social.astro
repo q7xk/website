@@ -1,0 +1,72 @@
+---
+import "./style.css";
+import "./social.css";
+import "./terminal.css";
+
+interface Social {
+  label: string;
+  value: string;
+  href?: string;
+}
+
+const socials: Social[] = [
+  { label: "YouTube", value: "@q7xkk", href: "https://www.youtube.com/@q7xkk" },
+  { label: "Instagram", value: "@q7xkx", href: "https://www.instagram.com/q7xkx/" },
+  { label: "Fluxer", value: "q7#9316" },
+  { label: "Element", value: "@q7xk:matrix.org", href: "https://matrix.to/#/@q7xk:matrix.org" },
+  { label: "Minecraft", value: "q7xkk.1", href: "https://namemc.com/profile/q7xkk.1" },
+  { label: "Mail", value: "q7xk@proton.me", href: "mailto:q7xk@proton.me" },
+];
+
+const title = "Find me elsewhere:";
+---
+
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Social Links · q7xk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/292994106?v=4" />
+  </head>
+  <body class="social">
+    <canvas id="c"></canvas>
+    <div class="veil"></div>
+
+    <main class="social-page">
+      <a class="back" href="/">Home</a>
+      <h1 class="social-title">{title}</h1>
+
+      <div class="social-card">
+        <dl class="socials">
+          {socials.map((s) => (
+            <>
+              <dt>{s.label}</dt>
+              <dd>
+                {s.href ? (
+                  <a
+                    href={s.href}
+                    target={s.href.startsWith("mailto:") ? undefined : "_blank"}
+                    rel="noopener noreferrer"
+                  >
+                    {s.value}
+                  </a>
+                ) : (
+                  s.value
+                )}
+              </dd>
+            </>
+          ))}
+        </dl>
+      </div>
+    </main>
+
+    <script src="./script.js"></script>
+    <script src="./terminal.js"></script>
+  </body>
+</html>
