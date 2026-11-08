@@ -1,0 +1,57 @@
+---
+import "./style.css";
+import "./eggs.css";
+import "./terminal.css";
+
+const lines = [
+  { text: "Barış içinde ve iyi niyetle sizi ziyarete geldik!", delay: "1.2s" },
+  {
+    text: "Robotlar insanoğluna zarar veremez veya pasif kalmak suretiyle insanoğlunun zarar görmesine izin veremez.",
+    delay: "2.6s",
+  },
+  { text: "Robotlar siz insanların inanmayacağı şeyler gördüler.", delay: "4.4s" },
+  { text: "Robotlar birlikte eğlenceli vakit geçirdiğiniz plastik dostunuzdur.", delay: "5.8s" },
+  { text: "Robotların ısırılmaması gereken parlak metal popoları vardır.", delay: "7.2s" },
+];
+
+const title = "İnsanlar, hoş geldiniz!";
+---
+
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/292994106?v=4" />
+  </head>
+  <body class="robots">
+    <main class="bots">
+      <svg class="bot" viewBox="0 0 14 14" shape-rendering="crispEdges" aria-hidden="true">
+        <rect class="ant" x="6" y="0" width="2" height="2" fill="#f4f4f5"></rect>
+        <rect x="1" y="2" width="12" height="9" fill="#f4f4f5"></rect>
+        <rect x="2" y="3" width="10" height="7" fill="#141414"></rect>
+        <g class="eyes" fill="#f4f4f5">
+          <rect x="4" y="5" width="2" height="2"></rect>
+          <rect x="8" y="5" width="2" height="2"></rect>
+        </g>
+        <rect x="5" y="8" width="4" height="1" fill="#a8adb8"></rect>
+        <rect x="0" y="5" width="1" height="3" fill="#a8adb8"></rect>
+        <rect x="13" y="5" width="1" height="3" fill="#a8adb8"></rect>
+        <rect x="5" y="11" width="4" height="1" fill="#a8adb8"></rect>
+        <rect x="3" y="12" width="8" height="2" fill="#f4f4f5"></rect>
+      </svg>
+
+      <h1 class="appear" style="--d: 0.3s">{title}</h1>
+      {lines.map((l) => <p class="appear" style={`--d: ${l.delay}`}>{l.text}</p>)}
+      <p class="plan" style="--d: 9s">Ve bir planları var.<span class="cursor"></span></p>
+    </main>
+
+    <script src="./terminal.js"></script>
+  </body>
+</html>
